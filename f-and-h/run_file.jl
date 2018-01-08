@@ -15,7 +15,7 @@ models = (
     ("PvS SVOR 0.001", OurPrefixVsSuffix(SVOR(0.01), SVM(0.001))),
     ("PvS SVOR 0.01", OurPrefixVsSuffix(SVOR(0.01), SVM(0.01))),
     ("PvS SVOR 0.1", OurPrefixVsSuffix(SVOR(0.01), SVM(0.1))),
-    ("PvS SVOR 1", OurPrefixVsSuffix(SVOR(0.01), SVM(0.1))),
+    ("PvS SVOR 1", OurPrefixVsSuffix(SVOR(0.01), SVM(1))),
     ("PvS SVOR 10", OurPrefixVsSuffix(SVOR(0.01), SVM(10))),
     ("PvS SVOR 100", OurPrefixVsSuffix(SVOR(0.01), SVM(100))),
     ("PvS SVOR 1000", OurPrefixVsSuffix(SVOR(0.01), SVM(1000))),
@@ -97,12 +97,12 @@ function run_file(dataset)
                 println("Already exists... [skipping]")
                 continue
             end
-            #if cross_validate
-            #    model, = fit_search_lambda(model, Xtr, ytr)
-            #else
-            #    model, = fit(model, Xtr, ytr)
-            #end
-            #yp = predict(model, Xts)
+            if CROSS_VALIDATE
+                model, = fit_search_lambda(model, Xtr, ytr)
+            else
+                model, = fit(model, Xtr, ytr)
+            end
+            yp = predict(model, Xts)
             yp = 1 + (rand(size(Xts,1)) .> 0.5)
             writecsv(outname, yp)
         end

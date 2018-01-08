@@ -19,10 +19,12 @@ function set_param(self::OurPrefixVsSuffix, param::String, value::Float64)
     set_param(self.first_model, param, value)
 end
 
-function fit(self::OurPrefixVsSuffix, X::Array{Float64,2}, y::Array{Int64})
+function fit(self::OurPrefixVsSuffix, X::Array{Float64,2}, y::Array{Int64}, train_first_model=true::Bool)
     @assert size(X,1) == length(y)
     nclasses = maximum(y)
-    fit(self.first_model, X, y)
+    if train_first_model
+        fit(self.first_model, X, y)
+    end
     bs, ws = get_weights(self.first_model)
     self.models = Array{BaseModel}(nclasses-1)
     for k in 1:nclasses-1

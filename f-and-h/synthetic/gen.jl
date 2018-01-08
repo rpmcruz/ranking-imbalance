@@ -24,7 +24,7 @@ function gen(K=3; N=400, INITIAL_ANGLE=60, COARSE_INC_ANGLE=0, COARSE_DIST=0.2,
             end
             n = Int(round(n))
         end
-        println("class ", k, " n=", n)
+        #println("class ", k, " n=", n)
 
         xx = rand(n)/K
         vert_err = (2*rand(n)-1)*ORTHO_ERR

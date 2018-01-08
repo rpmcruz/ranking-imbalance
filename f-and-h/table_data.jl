@@ -23,6 +23,7 @@ end
 metrics = (
     ("N", (X, y) -> size(X,1), 0),
     ("Features", (X, y) -> size(X,2), 0),
+    ("K", (X, y) -> length(unique(y)), 0),
     ("\\textbf{IR}", mean_IR, 2),
     ("OR", overlap1, 2),
     #("IR2", (X, y) -> maximum(counts(y))/minimum(counts(y)), 2),
@@ -44,7 +45,7 @@ end
 # save csv file
 writecsv("table-data.csv", table)
 
-o = sortperm(table[:,3])
+o = sortperm(table[:,4])
 datasets = datasets[o]
 table = table[o,:]  # order by IR
 
